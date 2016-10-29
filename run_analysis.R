@@ -35,14 +35,11 @@ yfull<-rbind(yTrain,yTest)
 ##  Extract mean columns
 cols<-grep("mean\\(",colnames(xFull))
 
-## Select mean columns only
-xMeans<-xFull[cols]
-
-##  Extract std columns only
-cols<-grep("std\\(",colnames(xFull))
+##  Extract std columns
+cols<-append(cols,grep("std\\(",colnames(xFull)))
 
 ## Select mean columns only
-xStd<-xFull[cols]
+xMeanStd<-xFull[cols]
 
 ## Read activity labels
 activityLabels<-read.table("activity_labels.txt")
@@ -51,24 +48,16 @@ activityLabels<-read.table("activity_labels.txt")
 names(activityLabels)<-c("ActivityCode","Activity")
 
 ## Merge Activity codes and data
-xMeans<-cbind(xMeans,yfull)
-xStd<-cbind(xStd,yfull)
+xMeanStd<-cbind(xMeanStd,yfull)
 
 ## Merge subject codes and data
-xMeans<-cbind(xMeans,subjectFull)
-xStd<-cbind(xStd,subjectFull)
-xMeans<-merge(xMeans,activityLabels,by.x="X5", by.y="ActivityCode")
-xStd<-merge(xStd,activityLabels,by.x="X5", by.y="ActivityCode")
-xMeans<-select(xMeans,-X5)
-xStd<-select(xStd,-X5)
+xMeanStd<-cbind(xMeanStd,subjectFull)
+xMeanStd<-merge(xMeanStd,activityLabels,by.x="X5", by.y="ActivityCode")
+xMeanStd<-select(xMeanStd,-X5)
 
 ## Compute average standard deviation by Activity and subject
-averageStd<-xStd %>% group_by(Activity,Subject) %>% summarise_each(funs(mean))
-
-## Compute average means by Acitivity and subject
-averageMean<-xMeans %>% group_by(Activity,Subject) %>% summarise_each(funs(mean))
+averageMeanStd<-xMeanStd %>% group_by(Activity,Subject) %>% summarise_each(funs(mean))
 
 
 ## Save computed averages to files
-write.csv(averageStd,"averagestd.csv")
-write.csv(averageMean,"averagemean.csv")
+write.csv(averageMeanStd,"averagemeanstd.csv")
