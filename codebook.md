@@ -16,12 +16,11 @@ c. Merges test and train data into xFull and yFull
 
 3. Merging and cleaning up data
 
-a. Extract columns for mean values and store into xMeans
-b. Extract columnns for std values store into XStd
-c. Merges the 2 data sets with activity codes
-d. Merges the 2 data sets with subject codes
+a. Extract columns for mean and std values and store into xMeanStd
+c. Merge the data set with activity codes
+d. Merge the data set with subject codes
 
 5. Compute avergae of mean and std by activity and subject into averageStd and averageMean
-6. write the resulting data sets into csv files
+6. write the resulting data sets into a file
 
 
