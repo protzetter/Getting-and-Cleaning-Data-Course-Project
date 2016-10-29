@@ -60,4 +60,4 @@ averageMeanStd<-xMeanStd %>% group_by(Activity,Subject) %>% summarise_each(funs(
 
 
 ## Save computed averages to files
-write.csv(averageMeanStd,"averagemeanstd.csv")
+write.table(averageMeanStd,"averagemeanstd.txt", row.name=FALSE)
